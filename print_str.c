@@ -1,9 +1,9 @@
 /**
- * print_string - prints a string
- * @ptr: pointer to the string to be printed
- *
- * Return: length
- */
+* print_string - prints a string
+* @ptr: pointer to the string to be printed
+*
+* Return: length
+*/
 #include "main.h"
 int print_string(char *ptr)
 {
