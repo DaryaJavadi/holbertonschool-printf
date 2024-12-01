@@ -1,8 +1,8 @@
 /**
- * _printf - printf
- * @format: the string format
- * Return: length
- */
+* _printf - printf
+* @format: the string format
+* Return: length
+*/
 #include "main.h"
 #include <stdarg.h>
 int _printf(const char *format, ...)
