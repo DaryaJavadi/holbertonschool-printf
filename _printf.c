@@ -1,37 +1,47 @@
-/**
-* _printf - printf
-* @format: the string format
-* Return: length
-*/
 #include "main.h"
-#include <stdarg.h>
+
+/**
+* _printf - Prints the given format with variables.
+* @format: Main format
+*
+* Return: Number of the chars printed.
+*/
 int _printf(const char *format, ...)
 {
-	int i = 0;
-	unsigned int len = 0;
-	va_list args;
+	va_list arg;
+	int len = 0, i = 0;
+	char crntchar, *crntstring;
 
-	va_start(args, format);
+	va_start(arg, format);
 	while (format[i])
 	{
-		if (format[i] == '%' && format[i + 1] == 'c')
-			len += _putchar(va_arg(args, int)), i += 2;
-
-		else if (format[i] == '%' && format[i + 1] == 's')
-			len += print_string(va_arg(args, char *)), i += 2;
-
-		else if (format[i] == '%' && format[i + 1] == '%')
-			len += _putchar('%'), i += 2;
-
-		else if (format[i] == '%' && format[i + 1] == '\0')
-			len--, i++;
-
-		else if (format[i] == '%' && (format[i + 1] == 'd' || format[i + 1] == 'i'))
-			len += print_number(va_arg(args, int)), i += 2;
-
+		if (format[i] == '%')
+			switch (format[i + 1])
+			{
+				case 'c':
+					crntchar = (char)va_arg(arg, int);
+					write_char(&len, crntchar), i += 2;
+					break;
+				case 's':
+					crntstring = va_arg(arg, char*);
+					write_str(&len, crntstring), i += 2;
+					break;
+				case 'd':
+				case 'i':
+					write_int(&len, va_arg(arg, int)), i += 2;
+					break;
+				case '%':
+					write_char(&len, '%'), i += 2;
+					break;
+				case '\0':
+					continue;
+				default:
+					write_char(&len, format[i]), i++;
+					break;
+			}
 		else
-			len += _putchar(format[i]), i++;
+			write_char(&len, format[i]), i++;
 	}
-	va_end(args);
+	va_end(arg);
 	return (len);
 }
